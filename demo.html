@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Touch Manager Demo</title>
+
+    <style>
+      html body {
+        margin: 8px;
+      }
+    </style>
+
+    <script src="touch-manager.js"></script>
+    <script>
+      let line;
+      document.addEventListener("DOMContentLoaded",()=>{
+        const area = new DrawArea(document.getElementById("container"));
+        area.onTouchStart(e=>{
+          line = area.createLine().draw();
+          const pos = e.touches[0].getPosition();
+          line.addPoint(pos.targetX, pos.targetY);
+          area.createPoint(pos.targetX,pos.targetY).draw({fill:"#ff0000",radius:1});
+        }).onTouchMove(e=>{
+          const pos = e.touches[0].getPosition();
+          line.addPoint(pos.targetX, pos.targetY);
+          area.createPoint(pos.targetX,pos.targetY).draw({fill:"#ff0000",radius:1});
+        }).onTouchEnd(e=>{});
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="container" style="width:400px;height:400px;border:1px solid #000;margin:auto;"></div>
+  </body>
+</html>
